@@ -1,16 +1,96 @@
+/* General body styles */
 body {
-    font-family: Arial, sans-serif;
-}
-header, footer {
-    background-color: #f8f9fa;
-    text-align: center;
-    padding: 10px 0;
-}
-nav ul {
-    list-style-type: none;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
     padding: 0;
+    background: #f4f4f4;
+    color: #333;
 }
+
+header {
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px 20px; /* Add padding for better spacing */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-content {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    margin-right: 20px;
+    font-size: 24px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin: 0;
+}
+
 nav ul li {
-    display: inline;
-    margin-right: 10px;
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.social-links {
+    display: flex;
+}
+
+.social-links a {
+    padding: 0 10px;
+}
+
+.social-links img {
+    width: 24px;
+    height: 24px;
+}
+
+main {
+    padding-top: 60px; /* Ensure main content is below the header */
+}
+
+section {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #ddd;
+}
+
+/* Hover effects */
+nav ul li a:hover,
+.social-links a:hover {
+    background: #f0f0f0;
+}
+
+
+.center {
+    text-align: center;
+    padding: 20px 0; /* Adds 10px padding on top and bottom */
 }
