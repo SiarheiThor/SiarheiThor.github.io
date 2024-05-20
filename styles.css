@@ -106,7 +106,12 @@ nav ul li a:hover,
 
 @media (max-width: 768px) {
     .menu-toggle {
-        display: block; /* Show the hamburger menu on small screens */
+        display: block;  /* Hide by default */
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: black; /* Sets the color of the icon to black */
     }
     .navigation {
         display: none; /* Hide the navigation initially on small screens */
