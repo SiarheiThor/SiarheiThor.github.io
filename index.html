@@ -6,13 +6,25 @@
     <title>Siarhei Thor CV</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico">
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            var menuToggle = document.querySelector('.menu-toggle');
+            var navigation = document.querySelector('.navigation');
+            menuToggle.addEventListener('click', function () {
+                navigation.classList.toggle('active');
+            });
+        });
+        </script>
 </head>
 <body>
     <header>
         <div class="header-content">
             <div class="left-content">
                 <h1>Siarhei Thor</h1>
-                <nav>
+                <!-- Hamburger menu button, visible only on mobile -->
+                <button class="menu-toggle">☰</button>
+                <nav class="navigation">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="cv.html">CV</a></li>

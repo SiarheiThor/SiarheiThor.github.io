@@ -96,31 +96,31 @@ nav ul li a:hover,
     padding: 20px 0; /* Adds 10px padding on top and bottom */
 }
 
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        align-items: center;
-    }
-    nav ul {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+.menu-toggle {
+    display: none;  /* Hide by default */
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
-    #about {
+    .menu-toggle {
+        display: block; /* Show the hamburger menu on small screens */
+    }
+    .navigation {
+        display: none; /* Hide the navigation initially on small screens */
         flex-direction: column;
     }
-    #about > div {
-        flex: none;
-        width: auto;
-        padding: 10px;
+    .navigation ul {
+        width: 100%;
     }
-    #about img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 20px;  /* Adds space between the image and text */
+    .navigation ul li {
+        text-align: center; /* Centers links when menu is open */
+        width: 100%;
+    }
+    .navigation.active {
+        display: flex; /* Shows the navigation when active */
     }
 }
 
