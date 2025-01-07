@@ -29,15 +29,24 @@ header {
 
 .header-content {
     display: flex;
-    justify-content: space-between; /* Ensures space between left and right content */
-    align-items: center; /* Vertically aligns the content */
-    width: 100%; /* Ensures the header content spans the full width of its container */
-    padding: 0 20px; /* Adds padding on the sides if needed */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    position: relative;
+}
+
+.navigation {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
 }
 
 .left-content {
     display: flex;
     align-items: center;
+    z-index: 1;
 }
 
 h1 {
@@ -228,5 +237,18 @@ nav ul li a:hover,
 strong {
     color: var(--text-primary);
     font-weight: 600;
+}
+
+.navigation ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation li {
+    text-align: center;
+    margin: 0 15px;  /* Adds some spacing between the links */
 }
 
