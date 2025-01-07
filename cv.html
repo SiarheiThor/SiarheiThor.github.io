@@ -26,7 +26,7 @@
                 <button class="menu-toggle">☰</button>
                 <nav class="navigation">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">About Me</a></li>
                         <li><a href="cv.html">CV</a></li>
                         <!-- <li><a href="projects.html">Projects</a></li> -->
                     </ul>
@@ -47,80 +47,123 @@
     </header>
 
     <main>
+            <div style="height: 50px;"></div>
         <div class="center">
             <h1>Siarhei Thor</h1>
-            <p>Data Scientist | MSc. Arch. Engineering</p>
-            <p>Tribschenstrasse 20, 6005 Luzern | (+41) 78 217 35 65 | <a href="mailto:siarheithor@gmail.com">siarheithor@gmail.com</a></p>
-            <a href="SIARHEI THOR - CV.pdf" download="siarheithor_cv">  
-                Download CV
-            </a>
+            <p>Data Scientist / MLOps Engineer | MSc. Arch. Engineering</p>
+            <p>Heinrichstrasse 247, 8005 Zurich | (+41) 78 217 35 65 | <a href="mailto:siarheithor@gmail.com">siarheithor@gmail.com</a></p>
+<!-- <a href="SIARHEI THOR - CV.pdf" download="siarheithor_cv">Download CV</a> -->
         </div>
 
         <section id="summary">
             <h2>Summary</h2>
-            <p>Siarhei is a proactive Data Scientist specialised in NLP and predictive modelling. He has comprehensive knowledge in Python, R, SQL, and advanced machine learning frameworks, including TensorFlow and LangChain. Siarhei has successfully developed predictive models to optimise athletic performance and has innovated data-to-text response features to enhance data analysis and communication. He is adept at using AI to deliver business value and enhance operational efficiency. Whether working as part of a team or independently, Siarhei consistently drives projects to successful completion.</p>
+            <p>Data Scientist with strong statistical foundations and comprehensive machine learning expertise. Drawing from extensive experience in product development and cross-functional team collaboration to drive AI initiatives forward. Proven track record in translating complex analytical challenges into tangible business value, with particular strength in strategic AI integration and implementation. Successfully developed and deployed various data-driven systems, from predictive analytics to multi-agent LLM architectures, while effectively coordinating with stakeholders and team members to ensure project success.</p>
         </section>
+
         <section id="skills">
-            <h2>Skills</h2>
-            <ul>
-                <li>Data Collection & Preparation: <strong>SQL</strong></li>
-                <li>Statistical Modeling / Testing: <strong>R, Python </strong>(SciPy, statsmodels)</li>
-                <li>Data Analysis, Feature Engineering, Visualisation: Python <strong>(Pandas, Polars, Seaborn, Plotly)</strong>, R <strong>(dplyr, ggplot2)</strong></li>
-                <li>Machine / Deep Learning Frameworks and Algorithms: <strong>Scikit-Learn, TensorFlow, LangChain, OpenCV, XGBoost, LightGBM</strong></li>
-                <li>Data Engineering, Cloud and Deployment: <strong>Linux, Docker, Dokku, GCP</strong></li>
-                <li>Version Control & Collaborations: <strong>GIT</strong></li>
-                <li>BI Data Visualization: <strong>Tableau</strong></li>
-            </ul>
+            <h2>Technical Skills</h2>
+            <div class="skills-list">
+                <div class="skill-group">
+                    <h3>Programming Languages</h3>
+                    <p>Python (Advanced), R (Intermediate), SQL</p>
+                </div>
+                
+                <div class="skill-group">
+                    <h3>Machine Learning & AI</h3>
+                    <p><strong>ML/DL:</strong> Scikit-Learn, TensorFlow, PyTorch, CUDA</p>
+                    <p><strong>Tabular ML:</strong> XGBoost, LightGBM, CatBoost</p>
+                    <p><strong>LLMs:</strong> LangChain, Transformers, RAG, QLoRA Fine-tuning, Prompt Engineering</p>
+                    <p><strong>Multi-Agent Systems:</strong> CrewAI, Vector Databases (Pinecone, Faiss), LLM APIs</p>
+                </div>
+
+                <div class="skill-group">
+                    <h3>Data Processing & Analysis</h3>
+                    <p><strong>Data Processing:</strong> Pandas, Polars, NumPy</p>
+                    <p><strong>Statistical Analysis:</strong> SciPy, R (Regression Modeling), dplyr</p>
+                </div>
+
+                <div class="skill-group">
+                    <h3>Development & Infrastructure</h3>
+                    <p><strong>APIs & Databases:</strong> FastAPI, MySQL (Remote/SSH), S3 Storage</p>
+                    <p><strong>Deployment:</strong> Docker, Dokku</p>
+                    <p><strong>Cloud:</strong> Google Cloud Platform, Linux</p>
+                </div>
+
+                <div class="skill-group">
+                    <h3>Development Tools & Practices</h3>
+                    <p><strong>Version Control:</strong> Git, GitHub (PR/Review workflows)</p>
+                    <p><strong>Project Management:</strong> Jira, Plane</p>
+                    <p><strong>Development Process:</strong> Agile/Scrum, CI/CD, Sentry</p>
+                </div>
+
+                <div class="skill-group">
+                    <h3>Data Visualization</h3>
+                    <p><strong>Tools & Libraries:</strong> Tableau, Power BI, Seaborn, Plotly</p>
+                </div>
+            </div>
         </section>
+
         <section id="experience">
             <h2>Experience</h2>
-            <div>
-                <h3>Quevita AG, Olten — Data Scientist, MLOps </h3>
-                <p>January 2024 - Present</p>
-                <p>Engaged in enhancing athletic performance utilizing advanced AI techniques. Developed predictive models focusing on key performance indicators to optimize athletes' training regimes. Achievements include:</p>
+            <div class="job">
+                <div class="job-header">
+                    <h3>Data Scientist, MLOps — Quevita AG</h3>
+                    <p class="date">January 2024 - Present</p>
+                </div>
+                <p>Focusing on leveraging AI to deliver business value. Some of the projects:</p>
                 <ul>
-                    <li>Engaged in enhancing athletic performance utilizing advanced AI techniques.</li>
-                    <li>Developed and deployed a machine learning model predicting 10 km race times from training datasets.</li>
-                    <li>Managed full lifecycle of ML models from development to deployment, maintaining robust data pipelines.</li>
+                    <li>Developed a multi-agent systems, such as dynamics athlete performance tracking, athlete and event insight generation, automative competition data gathering, .</li>
+                    <li>Engaged in enhancing athletic performance through advanced time series modelling and feature engineering.</li>
+                    <li>Developed and managed full lifecycle of a machine learning model predicting 10 km race times from training datasets.</li>
+                    <li>Created strategy to leverage company data to create additional value to the business.</li>
                     
                 </ul>
-                <p><strong>Tech Stack:</strong> Python (SKLearn, XGBoost, TensorFlow, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), R (regression analysis), Docker/Dokku for deployment.</p>
+                <p class="tech-stack">Tech Stack: Python (SKLearn, XGBoost, TensorFlow, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), R (regression analysis), Docker/Dokku for deployment.</p>
             </div>
-            <div>
-                <h3>Perspetivo AB, Stockholm — Data Scientist</h3>
-                <p>September 2023 - April 2024</p>
+
+            <div class="job">
+                <div class="job-header">
+                    <h3>Data Scientist — Perspetivo AB, Stockholm</h3>
+                    <p class="date">September 2023 - April 2024</p>
+                </div>
                 <p>Played a pivotal role in creating data-centric products and improving data quality across pipelines. Key contributions include:</p>
                 <ul>
                     <li>Pioneered the 'Ask Data' feature using NLP to transform tabular data into conversational chat responses.</li>
                     <li>Ensured efficient operation and scalability of data pipelines managing extensive survey data.</li>
-                    <li>Conceptualized and developed the initial three MVP iterations of a ‘Dashboard as a Service’ product.</li>
+                    <li>Conceptualized and developed the initial MVP's  of a 'Dashboard as a Service' product.</li>
                 </ul>
-                <p><strong>Tech Stack:</strong> Python (LangChain, SKLearn, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), Docker/Dokku for deployment, Tableau, GCP.</p>
+                <p class="tech-stack">Tech Stack: Python (LangChain, SKLearn, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), Docker/Dokku for deployment, Tableau, GCP.</p>
             </div>
-            <div>
-                <h3>STHLM22, Stockholm — AI Strategy and Digitalization Consultant</h3>
-                <p>September 2021 - September 2023</p>
+
+            <div class="job">
+                <div class="job-header">
+                    <h3>AI Strategy and Digitalization Consultant — STHLM22, Stockholm</h3>
+                    <p class="date">September 2021 - September 2023</p>
+                </div>
                 <p>Consulted on AI and digital strategy, improving operational efficiency and data utilization for clients in the real estate and architecture sectors. Notable projects:</p>
                 <ul>
                     <li>Created a GPT-3.5 powered AI chatbot for architects, facilitating compliance with building regulations.</li>
-                    <li>Developed a ‘Sketch to Rendering’ application using Stable Diffusion/ControlNet to enhance architectural design.</li>
-                    <li>Launched a ‘Sustainable Urban Planner’ tool for automated climate analysis within the Rhinoceros environment.</li>
+                    <li>Developed a 'Sketch to Rendering' application using Stable Diffusion/ControlNet to enhance architectural design.</li>
+                    <li>Launched a 'Sustainable Urban Planner' tool for automated climate analysis within the Rhinoceros environment.</li>
                 </ul>
-                <p><strong>Tech Stack:</strong> Python (LangChain, SKLearn, XGboost, TensorFlow, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), R (regression analysis), Docker/Dokku for deployment.</p>
+                <p class="tech-stack">Tech Stack: Python (LangChain, SKLearn, XGboost, TensorFlow, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), R (regression analysis), Docker/Dokku for deployment.</p>
             </div>
-            <div>
-                <h3>Semren & Månsson, Stockholm; Sweco, Göteborg; Cie, Amsterdam — Senior Architect</h3>
-                <p>January 2015 - October 2021</p>
-                <p>Worked as a building architect on various high-profile projects across Amsterdam, Göteborg, and Stockholm, leveraging advanced programming skills to develop computational design solutions. </p>
+
+            <div class="job">
+                <div class="job-header">
+                    <h3>Senior Architect — Semren & Månsson, Sweco, Cie</h3>
+                    <p class="date">January 2015 - October 2021</p>
+                </div>
+                <p>Worked as a building architect on various high-profile projects across Amsterdam, Göteborg, and Stockholm, leveraging advanced programming skills to develop computational design solutions.</p>
                 <ul>
-                    <li>Successfully led diverse international teams of up to 20 members, delivering building projects up to 5 million sq.
-                        m.</li>
+                    <li>Successfully led diverse international teams of up to 20 members, delivering building projects up to 5 million sq. m.</li>
                     <li>Enhanced project delivery speed by 50% through strategic integration of AI and ML tools.</li>
                     <li>Developed educational programs for junior architects on computational design and AI application.</li>
                 </ul>
-                <p><strong>Tech Stack:</strong> Python, Processing, Design Script / Dynamo (Revit), Grasshopper (Rhinoceros)</p>
+                <p class="tech-stack">Tech Stack: Python, Processing, Design Script / Dynamo (Revit), Grasshopper (Rhinoceros)</p>
             </div>
         </section>
+
         <section id="education">
             <h2>Education</h2>
             <div>
@@ -134,6 +177,7 @@
                 <p>This Data Science program at EC Education focuses on equipping students with key skills in data collection, processing, and analysis.</p>
             </div>
         </section>
+
         <section id="certifications">
             <h2>Online Courses & Certifications</h2>
             <ul>
@@ -144,13 +188,14 @@
                 <li>IBM Data Science Specialization, Coursera, Sep-Dec 2022</li>
             </ul>
         </section>
+
         <section id="hobbies">
             <h2>Hobbies</h2>
             <p>Orienteering, Trail Running, Photography.</p>
         </section>
     </main>
     <footer>
-        <p>© 2024 Siarhei Thor. All rights reserved.</p>
+        <p>© 2025 Siarhei Thor. All rights reserved.</p>
     </footer>
 </body>
 </html>
