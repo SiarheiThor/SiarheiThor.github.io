@@ -16,6 +16,165 @@
             var downloadButton = document.querySelector('.download-cv-button');
             var cvContent = document.querySelector('main');
 
+            function createPdfRenderRoot(width) {
+                var renderRoot = document.createElement('div');
+                renderRoot.style.position = 'fixed';
+                renderRoot.style.left = '-100000px';
+                renderRoot.style.top = '0';
+                renderRoot.style.width = width + 'px';
+                renderRoot.style.padding = '2rem';
+                renderRoot.style.boxSizing = 'border-box';
+                renderRoot.style.background = '#ffffff';
+                renderRoot.style.zIndex = '-1';
+                renderRoot.style.pointerEvents = 'none';
+                document.body.appendChild(renderRoot);
+                return renderRoot;
+            }
+
+            function wrapPdfNode(node) {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'pdf-item';
+                wrapper.style.background = '#ffffff';
+                wrapper.appendChild(node);
+                return wrapper;
+            }
+
+            function buildPdfItems(sourceRoot, renderRoot) {
+                var items = [];
+                var centerClone = sourceRoot.querySelector('.center').cloneNode(true);
+                var clonedSections = Array.from(sourceRoot.querySelectorAll('section'));
+
+                var clonedButton = centerClone.querySelector('.download-cv-button');
+                if (clonedButton) {
+                    clonedButton.remove();
+                }
+
+                items.push({ kind: 'content', node: wrapPdfNode(centerClone) });
+
+                clonedSections.forEach(function (section) {
+                    var heading = section.querySelector('h2');
+                    var sectionId = section.id;
+                    var bodyChildren;
+
+                    if (heading) {
+                        items.push({ kind: 'heading', node: wrapPdfNode(heading.cloneNode(true)) });
+                    }
+
+                    if (sectionId === 'experience' || sectionId === 'projects') {
+                        Array.from(section.children).filter(function (child) {
+                            return child.classList && child.classList.contains('job');
+                        }).forEach(function (job) {
+                            items.push({ kind: 'content', node: wrapPdfNode(job.cloneNode(true)) });
+                        });
+                        return;
+                    }
+
+                    if (sectionId === 'skills') {
+                        Array.from(section.querySelectorAll('.skill-group')).forEach(function (group) {
+                            items.push({ kind: 'content', node: wrapPdfNode(group.cloneNode(true)) });
+                        });
+                        return;
+                    }
+
+                    bodyChildren = Array.from(section.children).filter(function (child) {
+                        return child.tagName !== 'H2';
+                    });
+
+                    if (bodyChildren.length) {
+                        var bodyWrapper = document.createElement('div');
+                        bodyChildren.forEach(function (child) {
+                            bodyWrapper.appendChild(child.cloneNode(true));
+                        });
+                        items.push({ kind: 'content', node: wrapPdfNode(bodyWrapper) });
+                    }
+                });
+
+                items.forEach(function (item) {
+                    renderRoot.appendChild(item.node);
+                });
+
+                return items;
+            }
+
+            async function renderPdfItems(items) {
+                for (var i = 0; i < items.length; i += 1) {
+                    var canvas = await window.html2canvas(items[i].node, {
+                        backgroundColor: '#ffffff',
+                        scale: 2,
+                        useCORS: true
+                    });
+
+                    items[i].canvas = canvas;
+                }
+            }
+
+            function addCanvasToPdf(pdf, canvas, x, y, widthMm, heightMm) {
+                pdf.addImage(
+                    canvas.toDataURL('image/png'),
+                    'PNG',
+                    x,
+                    y,
+                    widthMm,
+                    heightMm,
+                    undefined,
+                    'FAST'
+                );
+            }
+
+            function exportPdfFromItems(items) {
+                var jsPDF = window.jspdf.jsPDF;
+                var pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                var pageWidth = pdf.internal.pageSize.getWidth();
+                var pageHeight = pdf.internal.pageSize.getHeight();
+                var margin = 10;
+                var printableWidth = pageWidth - (margin * 2);
+                var printableHeight = pageHeight - (margin * 2);
+                var gap = 2.5;
+                var y = margin;
+
+                items.forEach(function (item, index) {
+                    var itemHeight = (item.canvas.height * printableWidth) / item.canvas.width;
+                    var nextItem = items[index + 1];
+                    var nextHeight = nextItem ? (nextItem.canvas.height * printableWidth) / nextItem.canvas.width : 0;
+                    var keepWithNext = item.kind === 'heading' && nextItem;
+                    var requiredHeight = keepWithNext ? itemHeight + gap + nextHeight : itemHeight;
+
+                    if (y > margin && y + requiredHeight > pageHeight - margin) {
+                        pdf.addPage();
+                        y = margin;
+                    }
+
+                    if (itemHeight <= printableHeight) {
+                        addCanvasToPdf(pdf, item.canvas, margin, y, printableWidth, itemHeight);
+                        y += itemHeight + gap;
+                        return;
+                    }
+
+                    var scaledWidth = printableWidth;
+                    var scaledHeight = itemHeight;
+
+                    if (scaledHeight > printableHeight) {
+                        var shrinkRatio = printableHeight / scaledHeight;
+                        scaledWidth = printableWidth * shrinkRatio;
+                        scaledHeight = printableHeight;
+                    }
+
+                    if (y > margin && y + scaledHeight > pageHeight - margin) {
+                        pdf.addPage();
+                        y = margin;
+                    }
+
+                    addCanvasToPdf(pdf, item.canvas, margin, y, scaledWidth, scaledHeight);
+                    y += scaledHeight + gap;
+                });
+
+                pdf.save('siarhei-thor-cv.pdf');
+            }
+
             if (menuToggle && navigation) {
                 menuToggle.addEventListener('click', function () {
                     navigation.classList.toggle('active');
@@ -27,6 +186,7 @@
                     var html2canvasReady = typeof window.html2canvas === 'function';
                     var jsPdfReady = window.jspdf && typeof window.jspdf.jsPDF === 'function';
                     var originalLabel = downloadButton.textContent;
+                    var renderRoot = null;
 
                     if (!html2canvasReady || !jsPdfReady) {
                         window.alert('PDF download is temporarily unavailable. Please try again in a moment.');
@@ -37,47 +197,19 @@
                     downloadButton.textContent = 'Generating PDF...';
 
                     try {
-                        var canvas = await window.html2canvas(cvContent, {
-                            backgroundColor: '#ffffff',
-                            scale: 2,
-                            useCORS: true,
-                            ignoreElements: function (element) {
-                                return element.classList.contains('download-cv-button') ||
-                                    element.classList.contains('page-spacer');
-                            }
-                        });
+                        var renderWidth = Math.ceil(cvContent.getBoundingClientRect().width);
+                        renderRoot = createPdfRenderRoot(renderWidth);
+                        var items = buildPdfItems(cvContent, renderRoot);
 
-                        var jsPDF = window.jspdf.jsPDF;
-                        var pdf = new jsPDF({
-                            orientation: 'portrait',
-                            unit: 'mm',
-                            format: 'a4'
-                        });
-                        var pageWidth = pdf.internal.pageSize.getWidth();
-                        var pageHeight = pdf.internal.pageSize.getHeight();
-                        var margin = 10;
-                        var printableWidth = pageWidth - (margin * 2);
-                        var printableHeight = pageHeight - (margin * 2);
-                        var imageData = canvas.toDataURL('image/png');
-                        var imageHeight = (canvas.height * printableWidth) / canvas.width;
-                        var heightLeft = imageHeight;
-                        var positionY = margin;
-
-                        pdf.addImage(imageData, 'PNG', margin, positionY, printableWidth, imageHeight, undefined, 'FAST');
-                        heightLeft -= printableHeight;
-
-                        while (heightLeft > 0) {
-                            positionY = margin - (imageHeight - heightLeft);
-                            pdf.addPage();
-                            pdf.addImage(imageData, 'PNG', margin, positionY, printableWidth, imageHeight, undefined, 'FAST');
-                            heightLeft -= printableHeight;
-                        }
-
-                        pdf.save('siarhei-thor-cv.pdf');
+                        await renderPdfItems(items);
+                        exportPdfFromItems(items);
                     } catch (error) {
                         console.error('Failed to generate PDF', error);
                         window.alert('Could not generate the PDF automatically. Please try again.');
                     } finally {
+                        if (renderRoot) {
+                            renderRoot.remove();
+                        }
                         downloadButton.disabled = false;
                         downloadButton.textContent = originalLabel;
                     }
