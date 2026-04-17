@@ -6,12 +6,15 @@
     <title>Siarhei Thor CV</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script defer>
         document.addEventListener('DOMContentLoaded', function () {
             var menuToggle = document.querySelector('.menu-toggle');
             var navigation = document.querySelector('.navigation');
             var downloadButton = document.querySelector('.download-cv-button');
+            var cvContent = document.querySelector('main');
 
             if (menuToggle && navigation) {
                 menuToggle.addEventListener('click', function () {
@@ -19,9 +22,65 @@
                 });
             }
 
-            if (downloadButton) {
-                downloadButton.addEventListener('click', function () {
-                    window.print();
+            if (downloadButton && cvContent) {
+                downloadButton.addEventListener('click', async function () {
+                    var html2canvasReady = typeof window.html2canvas === 'function';
+                    var jsPdfReady = window.jspdf && typeof window.jspdf.jsPDF === 'function';
+                    var originalLabel = downloadButton.textContent;
+
+                    if (!html2canvasReady || !jsPdfReady) {
+                        window.alert('PDF download is temporarily unavailable. Please try again in a moment.');
+                        return;
+                    }
+
+                    downloadButton.disabled = true;
+                    downloadButton.textContent = 'Generating PDF...';
+
+                    try {
+                        var canvas = await window.html2canvas(cvContent, {
+                            backgroundColor: '#ffffff',
+                            scale: 2,
+                            useCORS: true,
+                            ignoreElements: function (element) {
+                                return element.classList.contains('download-cv-button') ||
+                                    element.classList.contains('page-spacer');
+                            }
+                        });
+
+                        var jsPDF = window.jspdf.jsPDF;
+                        var pdf = new jsPDF({
+                            orientation: 'portrait',
+                            unit: 'mm',
+                            format: 'a4'
+                        });
+                        var pageWidth = pdf.internal.pageSize.getWidth();
+                        var pageHeight = pdf.internal.pageSize.getHeight();
+                        var margin = 10;
+                        var printableWidth = pageWidth - (margin * 2);
+                        var printableHeight = pageHeight - (margin * 2);
+                        var imageData = canvas.toDataURL('image/png');
+                        var imageHeight = (canvas.height * printableWidth) / canvas.width;
+                        var heightLeft = imageHeight;
+                        var positionY = margin;
+
+                        pdf.addImage(imageData, 'PNG', margin, positionY, printableWidth, imageHeight, undefined, 'FAST');
+                        heightLeft -= printableHeight;
+
+                        while (heightLeft > 0) {
+                            positionY = margin - (imageHeight - heightLeft);
+                            pdf.addPage();
+                            pdf.addImage(imageData, 'PNG', margin, positionY, printableWidth, imageHeight, undefined, 'FAST');
+                            heightLeft -= printableHeight;
+                        }
+
+                        pdf.save('siarhei-thor-cv.pdf');
+                    } catch (error) {
+                        console.error('Failed to generate PDF', error);
+                        window.alert('Could not generate the PDF automatically. Please try again.');
+                    } finally {
+                        downloadButton.disabled = false;
+                        downloadButton.textContent = originalLabel;
+                    }
                 });
             }
         });
