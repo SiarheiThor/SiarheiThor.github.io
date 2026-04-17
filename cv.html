@@ -11,9 +11,19 @@
         document.addEventListener('DOMContentLoaded', function () {
             var menuToggle = document.querySelector('.menu-toggle');
             var navigation = document.querySelector('.navigation');
-            menuToggle.addEventListener('click', function () {
-                navigation.classList.toggle('active');
-            });
+            var downloadButton = document.querySelector('.download-cv-button');
+
+            if (menuToggle && navigation) {
+                menuToggle.addEventListener('click', function () {
+                    navigation.classList.toggle('active');
+                });
+            }
+
+            if (downloadButton) {
+                downloadButton.addEventListener('click', function () {
+                    window.print();
+                });
+            }
         });
         </script>
 </head>
@@ -47,58 +57,47 @@
     </header>
 
     <main>
-            <div style="height: 50px;"></div>
+            <div class="page-spacer"></div>
         <div class="center">
             <h1>Siarhei Thor</h1>
-            <p>Data Scientist / MLOps Engineer | MSc. Arch. Engineering</p>
-            <p>Heinrichstrasse 247, 8005 Zurich | (+41) 78 217 35 65 | <a href="mailto:siarheithor@gmail.com">siarheithor@gmail.com</a></p>
-<!-- <a href="SIARHEI THOR - CV.pdf" download="siarheithor_cv">Download CV</a> -->
+            <p>AI/ML Engineer | Applied ML, LLM Systems &amp; AI Product Infrastructure</p>
+            <p>Zurich, Switzerland | (+41) 78 217 35 65 | <a href="mailto:siarheithor@gmail.com">siarheithor@gmail.com</a></p>
+            <p><a href="https://www.linkedin.com/in/siarhei-thor/" target="_blank">LinkedIn</a> | <a href="https://github.com/SiarheiThor" target="_blank">GitHub</a></p>
+            <p class="cv-last-updated">Last updated: April 17, 2026</p>
+            <button class="download-cv-button" type="button">Download as PDF</button>
         </div>
 
         <section id="summary">
-            <h2>Summary</h2>
-            <p>Data Scientist with strong statistical foundations and comprehensive machine learning expertise. Drawing from extensive experience in product development and cross-functional team collaboration to drive AI initiatives forward. Proven track record in translating complex analytical challenges into tangible business value, with particular strength in strategic AI integration and implementation. Successfully developed and deployed various data-driven systems, from predictive analytics to multi-agent LLM architectures, while effectively coordinating with stakeholders and team members to ensure project success.</p>
+            <h2>Profile</h2>
+            <p>AI/ML Engineer with hands-on experience building machine learning services, agentic LLM applications, and backend platforms for AI products. Strong in Python, FastAPI, Pydantic, scikit-learn/XGBoost, data pipelines, retrieval systems, and production-oriented ML workflows. Experienced in turning messy real-world data into reliable APIs, internal tools, and user-facing AI features. Combines applied ML engineering with product thinking, structured problem solving, and cross-functional delivery.</p>
         </section>
 
         <section id="skills">
             <h2>Technical Skills</h2>
             <div class="skills-list">
                 <div class="skill-group">
-                    <h3>Programming Languages</h3>
-                    <p>Python (Advanced), R (Intermediate), SQL</p>
-                </div>
-                
-                <div class="skill-group">
-                    <h3>Machine Learning & AI</h3>
-                    <p><strong>ML/DL:</strong> Scikit-Learn, TensorFlow, PyTorch, CUDA</p>
-                    <p><strong>Tabular ML:</strong> XGBoost, LightGBM, CatBoost</p>
-                    <p><strong>LLMs:</strong> LangChain, Transformers, RAG, QLoRA Fine-tuning, Prompt Engineering</p>
-                    <p><strong>Multi-Agent Systems:</strong> CrewAI, Vector Databases / Search (Pinecone, ChromaDB / Faiss), LLM APIs</p>
+                    <h3>Languages</h3>
+                    <p>Python, SQL, R</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Data Processing & Analysis</h3>
-                    <p><strong>Data Processing:</strong> Pandas, Polars, NumPy</p>
-                    <p><strong>Statistical Analysis:</strong> SciPy, R (Regression Modeling), dplyr</p>
+                    <h3>AI / ML</h3>
+                    <p>scikit-learn, XGBoost, TensorFlow, PydanticAI, LLM APIs, prompt engineering, retrieval-augmented workflows, vector search</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Development & Infrastructure</h3>
-                    <p><strong>APIs & Databases:</strong> FastAPI, MySQL (Remote/SSH), S3 Storage</p>
-                    <p><strong>Deployment:</strong> Docker, Dokku</p>
-                    <p><strong>Cloud:</strong> Google Cloud Platform, Linux</p>
+                    <h3>Data &amp; Analytics</h3>
+                    <p>pandas, NumPy, SciPy, DuckDB, FAISS, feature engineering, statistical testing, model evaluation</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Development Tools & Practices</h3>
-                    <p><strong>Version Control:</strong> Git, GitHub (PR/Review workflows)</p>
-                    <p><strong>Project Management:</strong> Jira, Plane</p>
-                    <p><strong>Development Process:</strong> Agile/Scrum, CI/CD, Sentry</p>
+                    <h3>Backend &amp; Data Engineering</h3>
+                    <p>FastAPI, SQLAlchemy, PostgreSQL, MySQL, Redis, WebSockets, API design, async Python</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Data Visualization</h3>
-                    <p><strong>Tools & Libraries:</strong> Tableau, Power BI, Seaborn, Plotly</p>
+                    <h3>Infrastructure &amp; Ops</h3>
+                    <p>Docker, Gunicorn/Uvicorn, S3-compatible storage, OpenTelemetry, Langfuse, Sentry, pytest, Git, Linux, GCP</p>
                 </div>
             </div>
         </section>
@@ -107,95 +106,106 @@
             <h2>Experience</h2>
             <div class="job">
                 <div class="job-header">
-                    <h3>Data Scientist, MLOps — Quevita AG</h3>
-                    <p class="date">January 2024 - Present</p>
+                    <h3>AI/ML Engineer — Quevita AG, Olten</h3>
+                    <p class="date">May 2024 - Present</p>
                 </div>
-                <p>Focusing on leveraging AI to deliver business value. Some of the projects:</p>
                 <ul>
-                    <li>Developed a multi-agent systems, such as dynamics athlete performance tracking, athlete and event insight generation, automative competition data gathering, .</li>
-                    <li>Engaged in enhancing athletic performance through advanced time series modelling and feature engineering.</li>
-                    <li>Developed and managed full lifecycle of a machine learning model predicting 10 km race times from training datasets.</li>
-                    <li>Created strategy to leverage company data to create additional value to the business.</li>
-                    
+                    <li>Built and operated ML-backed services for running and cycling performance analytics, covering data extraction, feature engineering, model training, evaluation, calibration, deployment, and monitoring.</li>
+                    <li>Developed production prediction pipelines in Python using FastAPI, scikit-learn, XGBoost, pandas, and NumPy, with strong attention to leakage prevention, data quality, fallback logic, and inference robustness.</li>
+                    <li>Implemented ensemble and routing approaches for endurance-sports prediction, including support for incomplete telemetry and real-world activity data.</li>
+                    <li>Built an AI-assisted event data management pipeline that enriches incomplete race listings into structured, validated RaceDB records using web search, scraping, schema-driven extraction, validation, and entity matching.</li>
+                    <li>Designed and prototyped AI-assisted training-planning and internal product prototypes for endurance-sports use cases, including structured knowledge handling and developer-facing tooling.</li>
+                    <li>Designed and built an LLM- and sports-analytics-based training feedback system.</li>
                 </ul>
-                <p class="tech-stack">Tech Stack: Python (SKLearn, XGBoost, TensorFlow, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), R (regression analysis), Docker/Dokku for deployment.</p>
             </div>
 
             <div class="job">
                 <div class="job-header">
-                    <h3>Data Scientist — Perspetivo AB, Stockholm</h3>
-                    <p class="date">September 2023 - April 2024</p>
+                    <h3>Data Scientist / AI Engineer — Perspetivo AB, Stockholm</h3>
+                    <p class="date">September 2023 - April 2024; June 2025 - September 2025 (project-based)</p>
                 </div>
-                <p>Played a pivotal role in creating data-centric products and improving data quality across pipelines. Key contributions include:</p>
                 <ul>
-                    <li>Pioneered the 'Ask Data' feature using NLP to transform tabular data into conversational chat responses.</li>
-                    <li>Ensured efficient operation and scalability of data pipelines managing extensive survey data.</li>
-                    <li>Conceptualized and developed the initial MVP's  of a 'Dashboard as a Service' product.</li>
+                    <li>Built conversational analytics products on top of survey datasets, including chat-based insight workflows that translate structured data into natural-language answers.</li>
+                    <li>Developed a multi-agent survey intelligence prototype combining semantic retrieval, SQL-based analysis, statistical guardrails, and user-facing chat interfaces.</li>
+                    <li>Implemented preprocessing pipelines for survey standardization, metadata generation, segmentation analysis, and vector-store creation for downstream retrieval.</li>
+                    <li>Created web and API layers for interactive analysis using FastAPI, WebSockets, DuckDB, pandas, scipy, and FAISS.</li>
+                    <li>Maintained and improved data pipelines for large survey datasets and helped prototype early dashboard-style product offerings.</li>
                 </ul>
-                <p class="tech-stack">Tech Stack: Python (LangChain, SKLearn, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), Docker/Dokku for deployment, Tableau, GCP.</p>
             </div>
 
             <div class="job">
                 <div class="job-header">
                     <h3>AI Strategy and Digitalization Consultant — STHLM22, Stockholm</h3>
-                    <p class="date">September 2021 - September 2023</p>
+                    <p class="date">September 2021 - August 2023</p>
                 </div>
-                <p>Consulted on AI and digital strategy, improving operational efficiency and data utilization for clients in the real estate and architecture sectors. Notable projects:</p>
                 <ul>
-                    <li>Created a GPT-3.5 powered AI chatbot for architects, facilitating compliance with building regulations.</li>
-                    <li>Developed a 'Sketch to Rendering' application using Stable Diffusion/ControlNet to enhance architectural design.</li>
-                    <li>Launched a 'Sustainable Urban Planner' tool for automated climate analysis within the Rhinoceros environment.</li>
+                    <li>Advised architecture and real-estate clients on AI adoption, digital workflows, and product opportunities.</li>
+                    <li>Built applied AI prototypes including a GPT-powered regulatory assistant for architects, a Stable Diffusion / ControlNet workflow for design exploration, and digital tools for sustainability-focused planning analysis.</li>
+                    <li>Helped translate domain-specific business problems into practical AI-enabled workflows and MVP concepts.</li>
                 </ul>
-                <p class="tech-stack">Tech Stack: Python (LangChain, SKLearn, XGboost, TensorFlow, Pandas/Polars, FastAPI), SQL (Postgres, MySQL), R (regression analysis), Docker/Dokku for deployment.</p>
             </div>
 
             <div class="job">
                 <div class="job-header">
-                    <h3>Senior Architect — Semren & Månsson, Sweco, Cie</h3>
+                    <h3>Senior Architect / Computational Design — Semren &amp; Månsson, Sweco, Cie</h3>
                     <p class="date">January 2015 - October 2021</p>
                 </div>
-                <p>Worked as a building architect on various high-profile projects across Amsterdam, Göteborg, and Stockholm, leveraging advanced programming skills to develop computational design solutions.</p>
                 <ul>
-                    <li>Successfully led diverse international teams of up to 20 members, delivering building projects up to 5 million sq. m.</li>
-                    <li>Enhanced project delivery speed by 50% through strategic integration of AI and ML tools.</li>
-                    <li>Developed educational programs for junior architects on computational design and AI application.</li>
+                    <li>Led and contributed to large-scale building projects across Sweden and the Netherlands, combining architecture, digital workflows, and computational design methods.</li>
+                    <li>Used programming and parametric design tools to improve delivery quality, automate repetitive workflows, and support complex design coordination.</li>
+                    <li>Managed multidisciplinary teams and developed training material for junior architects in computational design and digital methods.</li>
                 </ul>
-                <p class="tech-stack">Tech Stack: Python, Processing, Design Script / Dynamo (Revit), Grasshopper (Rhinoceros)</p>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Selected Projects</h2>
+            <div class="job">
+                <div class="job-header">
+                    <h3>Knowledge Hub — Personal Project</h3>
+                    <p class="date">July 2025 - January 2026</p>
+                </div>
+                <ul>
+                    <li>Built a modular AI platform for Telegram-based learning and productivity apps with shared backend infrastructure, plugin-based product logic, persistent user state, scheduling, and multi-provider LLM orchestration.</li>
+                    <li>Developed a German-learning product with CEFR-based onboarding, vocabulary progression, quizzes, reminders, and cached AI-generated learning content.</li>
+                </ul>
             </div>
         </section>
 
         <section id="education">
             <h2>Education</h2>
             <div>
-                <h3>MSc, Architectural Engineering — TECHNICAL UNIVERSITY DELFT, The Netherlands</h3>
+                <h3>MSc, Architectural Engineering — Delft University of Technology, The Netherlands</h3>
                 <p>September 2009 - June 2014</p>
-                <p>Specialised in Architectural Engineering and Technology, focusing on sustainable and efficient building practices. Engaged deeply with cutting-edge developments in building technology, installation technology, and digital design methodologies.</p>
             </div>
+        </section>
+
+        <section id="additional-education">
+            <h2>Additional Education</h2>
             <div>
-                <h3>Higher Vocational Education Program, Data Science — EC (IT - school), Online / Stockholm</h3>
-                <p>August 2023 - June 2024 </p>
-                <p>This Data Science program at EC Education focuses on equipping students with key skills in data collection, processing, and analysis.</p>
+                <h3>Data Science Program — EC Education, Stockholm / Online</h3>
+                <p>August 2023 - June 2024</p>
             </div>
         </section>
 
         <section id="certifications">
-            <h2>Online Courses & Certifications</h2>
+            <h2>Certifications</h2>
             <ul>
-                <li>Google Advanced Data Analytics, Coursera, Jan-Jun 2023</li>
-                <li>Deep Learning Specialization, Deeplearning.ai, Dec 2022-Apr 2023</li>
-                <li>Machine Learning Specialization, Deeplearning.ai, Sep-Dec 2022</li>
-                <li>LLM Finetuning and Prompt Engineering, Deeplearning.ai, Sep 2023</li>
-                <li>IBM Data Science Specialization, Coursera, Sep-Dec 2022</li>
+                <li>Google Advanced Data Analytics, Coursera</li>
+                <li>Deep Learning Specialization, DeepLearning.AI</li>
+                <li>Machine Learning Specialization, DeepLearning.AI</li>
+                <li>LLM Finetuning and Prompt Engineering, DeepLearning.AI</li>
+                <li>IBM Data Science Specialization, Coursera</li>
             </ul>
         </section>
 
-        <section id="hobbies">
-            <h2>Hobbies</h2>
-            <p>Orienteering, Trail Running, Photography.</p>
+        <section id="additional">
+            <h2>Additional</h2>
+            <p>Interests: Orienteering, trail running, cycling, photography.</p>
         </section>
     </main>
     <footer>
-        <p>© 2025 Siarhei Thor. All rights reserved.</p>
+        <p>© 2026 Siarhei Thor. All rights reserved.</p>
     </footer>
 </body>
 </html>

@@ -94,6 +94,10 @@ main {
     padding: 2rem;
 }
 
+.page-spacer {
+    height: 50px;
+}
+
 section {
     margin-bottom: 2rem;
 }
@@ -125,6 +129,30 @@ h3 {
 .center p {
     margin: 0.2rem 0;
     font-family: var(--main-font);
+}
+
+.cv-last-updated {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+}
+
+.download-cv-button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--text-primary);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--text-primary);
+    font-family: var(--main-font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.download-cv-button:hover {
+    background: var(--text-primary);
+    color: #fff;
 }
 
 .skills-list {
@@ -223,6 +251,12 @@ nav ul li a:hover,
     .navigation.active {
         display: flex; /* Shows the navigation when active */
     }
+
+    .job-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
 }
 
 #about {
@@ -252,3 +286,74 @@ strong {
     margin: 0 15px;  /* Adds some spacing between the links */
 }
 
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 11pt;
+        line-height: 1.35;
+    }
+
+    header,
+    footer,
+    .menu-toggle,
+    .social-links,
+    .navigation,
+    .download-cv-button,
+    .page-spacer {
+        display: none !important;
+    }
+
+    main {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    section {
+        margin-bottom: 1.2rem;
+        page-break-inside: avoid;
+    }
+
+    .job,
+    .skill-group {
+        page-break-inside: avoid;
+    }
+
+    .center {
+        padding: 0 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .center h1 {
+        font-size: 22pt;
+    }
+
+    h2 {
+        color: #000;
+        border-bottom: 1px solid #bbb;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.25rem;
+    }
+
+    h3,
+    p,
+    li,
+    a,
+    .date {
+        color: #000;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    ul {
+        margin: 0.35rem 0 0;
+    }
+}
