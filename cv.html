@@ -18,6 +18,7 @@
 
             function createPdfRenderRoot(width) {
                 var renderRoot = document.createElement('div');
+                renderRoot.className = 'pdf-render-root';
                 renderRoot.style.position = 'fixed';
                 renderRoot.style.left = '-100000px';
                 renderRoot.style.top = '0';
@@ -130,10 +131,10 @@
                 });
                 var pageWidth = pdf.internal.pageSize.getWidth();
                 var pageHeight = pdf.internal.pageSize.getHeight();
-                var margin = 10;
+                var margin = 14;
                 var printableWidth = pageWidth - (margin * 2);
                 var printableHeight = pageHeight - (margin * 2);
-                var gap = 2.5;
+                var gap = 4;
                 var y = margin;
 
                 items.forEach(function (item, index) {
@@ -177,7 +178,8 @@
 
             if (menuToggle && navigation) {
                 menuToggle.addEventListener('click', function () {
-                    navigation.classList.toggle('active');
+                    var isOpen = navigation.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', String(isOpen));
                 });
             }
 
@@ -197,7 +199,7 @@
                     downloadButton.textContent = 'Generating PDF...';
 
                     try {
-                        var renderWidth = Math.ceil(cvContent.getBoundingClientRect().width);
+                        var renderWidth = 820;
                         renderRoot = createPdfRenderRoot(renderWidth);
                         var items = buildPdfItems(cvContent, renderRoot);
 
@@ -224,10 +226,10 @@
             <div class="left-content">
                 <h1>Siarhei Thor</h1>
                 <!-- Hamburger menu button, visible only on mobile -->
-                <button class="menu-toggle">☰</button>
+                <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
                 <nav class="navigation">
                     <ul>
-                        <li><a href="cv.html">CV</a></li>
+                        <li><a href="cv.html" aria-current="page">CV</a></li>
                         <li><a href="index.html">About Me</a></li>
                         <!-- <li><a href="projects.html">Projects</a></li> -->
                     </ul>
@@ -247,8 +249,8 @@
         </div>
     </header>
 
-    <main>
-            <div class="page-spacer"></div>
+    <main class="cv-page">
+        <div class="page-spacer"></div>
         <div class="center">
             <h1>Siarhei Thor</h1>
             <p>AI/ML Engineer | Applied ML, LLM Systems &amp; AI Product Infrastructure</p>
