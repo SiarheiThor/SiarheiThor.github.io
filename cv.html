@@ -6,8 +6,8 @@
     <title>Siarhei Thor CV</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js"></script>
 
     <script defer>
         document.addEventListener('DOMContentLoaded', function () {
@@ -16,164 +16,275 @@
             var downloadButton = document.querySelector('.download-cv-button');
             var cvContent = document.querySelector('main');
 
-            function createPdfRenderRoot(width) {
-                var renderRoot = document.createElement('div');
-                renderRoot.className = 'pdf-render-root';
-                renderRoot.style.position = 'fixed';
-                renderRoot.style.left = '-100000px';
-                renderRoot.style.top = '0';
-                renderRoot.style.width = width + 'px';
-                renderRoot.style.padding = '2rem';
-                renderRoot.style.boxSizing = 'border-box';
-                renderRoot.style.background = '#ffffff';
-                renderRoot.style.zIndex = '-1';
-                renderRoot.style.pointerEvents = 'none';
-                document.body.appendChild(renderRoot);
-                return renderRoot;
+            function cleanText(value) {
+                return String(value || '').replace(/\s+/g, ' ').trim();
             }
 
-            function wrapPdfNode(node) {
-                var wrapper = document.createElement('div');
-                wrapper.className = 'pdf-item';
-                wrapper.style.background = '#ffffff';
-                wrapper.appendChild(node);
-                return wrapper;
+            function textOf(element) {
+                return element ? cleanText(element.textContent) : '';
             }
 
-            function buildPdfItems(sourceRoot, renderRoot) {
-                var items = [];
-                var centerClone = sourceRoot.querySelector('.center').cloneNode(true);
-                var clonedSections = Array.from(sourceRoot.querySelectorAll('section'));
+            function sectionHeading(section) {
+                return {
+                    text: textOf(section.querySelector('h2')).toUpperCase(),
+                    style: 'sectionHeading',
+                    margin: [0, 14, 0, 7]
+                };
+            }
 
-                var clonedButton = centerClone.querySelector('.download-cv-button');
-                if (clonedButton) {
-                    clonedButton.remove();
+            function inlineTextFromNode(node) {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    return cleanText(node.textContent);
                 }
 
-                items.push({ kind: 'content', node: wrapPdfNode(centerClone) });
-
-                clonedSections.forEach(function (section) {
-                    var heading = section.querySelector('h2');
-                    var sectionId = section.id;
-                    var bodyChildren;
-
-                    if (heading) {
-                        items.push({ kind: 'heading', node: wrapPdfNode(heading.cloneNode(true)) });
-                    }
-
-                    if (sectionId === 'experience' || sectionId === 'projects') {
-                        Array.from(section.children).filter(function (child) {
-                            return child.classList && child.classList.contains('job');
-                        }).forEach(function (job) {
-                            items.push({ kind: 'content', node: wrapPdfNode(job.cloneNode(true)) });
-                        });
-                        return;
-                    }
-
-                    if (sectionId === 'skills') {
-                        Array.from(section.querySelectorAll('.skill-group')).forEach(function (group) {
-                            items.push({ kind: 'content', node: wrapPdfNode(group.cloneNode(true)) });
-                        });
-                        return;
-                    }
-
-                    bodyChildren = Array.from(section.children).filter(function (child) {
-                        return child.tagName !== 'H2';
-                    });
-
-                    if (bodyChildren.length) {
-                        var bodyWrapper = document.createElement('div');
-                        bodyChildren.forEach(function (child) {
-                            bodyWrapper.appendChild(child.cloneNode(true));
-                        });
-                        items.push({ kind: 'content', node: wrapPdfNode(bodyWrapper) });
-                    }
-                });
-
-                items.forEach(function (item) {
-                    renderRoot.appendChild(item.node);
-                });
-
-                return items;
-            }
-
-            async function renderPdfItems(items) {
-                for (var i = 0; i < items.length; i += 1) {
-                    var canvas = await window.html2canvas(items[i].node, {
-                        backgroundColor: '#ffffff',
-                        scale: 2,
-                        useCORS: true
-                    });
-
-                    items[i].canvas = canvas;
+                if (node.nodeType !== Node.ELEMENT_NODE) {
+                    return '';
                 }
+
+                return cleanText(node.textContent);
             }
 
-            function addCanvasToPdf(pdf, canvas, x, y, widthMm, heightMm) {
-                pdf.addImage(
-                    canvas.toDataURL('image/png'),
-                    'PNG',
-                    x,
-                    y,
-                    widthMm,
-                    heightMm,
-                    undefined,
-                    'FAST'
-                );
-            }
+            function paragraphRuns(element) {
+                var runs = [];
 
-            function exportPdfFromItems(items) {
-                var jsPDF = window.jspdf.jsPDF;
-                var pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                var pageWidth = pdf.internal.pageSize.getWidth();
-                var pageHeight = pdf.internal.pageSize.getHeight();
-                var margin = 14;
-                var printableWidth = pageWidth - (margin * 2);
-                var printableHeight = pageHeight - (margin * 2);
-                var gap = 4;
-                var y = margin;
+                Array.from(element.childNodes).forEach(function (node) {
+                    var value = inlineTextFromNode(node);
 
-                items.forEach(function (item, index) {
-                    var itemHeight = (item.canvas.height * printableWidth) / item.canvas.width;
-                    var nextItem = items[index + 1];
-                    var nextHeight = nextItem ? (nextItem.canvas.height * printableWidth) / nextItem.canvas.width : 0;
-                    var keepWithNext = item.kind === 'heading' && nextItem;
-                    var requiredHeight = keepWithNext ? itemHeight + gap + nextHeight : itemHeight;
-
-                    if (y > margin && y + requiredHeight > pageHeight - margin) {
-                        pdf.addPage();
-                        y = margin;
-                    }
-
-                    if (itemHeight <= printableHeight) {
-                        addCanvasToPdf(pdf, item.canvas, margin, y, printableWidth, itemHeight);
-                        y += itemHeight + gap;
+                    if (!value) {
                         return;
                     }
 
-                    var scaledWidth = printableWidth;
-                    var scaledHeight = itemHeight;
-
-                    if (scaledHeight > printableHeight) {
-                        var shrinkRatio = printableHeight / scaledHeight;
-                        scaledWidth = printableWidth * shrinkRatio;
-                        scaledHeight = printableHeight;
+                    if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'STRONG') {
+                        runs.push({ text: value + ' ', bold: true, color: '#1b2021' });
+                        return;
                     }
 
-                    if (y > margin && y + scaledHeight > pageHeight - margin) {
-                        pdf.addPage();
-                        y = margin;
+                    if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'A') {
+                        runs.push({
+                            text: value + ' ',
+                            link: node.getAttribute('href'),
+                            color: '#2f6257',
+                            decoration: 'underline'
+                        });
+                        return;
                     }
 
-                    addCanvasToPdf(pdf, item.canvas, margin, y, scaledWidth, scaledHeight);
-                    y += scaledHeight + gap;
+                    runs.push({ text: value + ' ' });
                 });
 
-                pdf.save('siarhei-thor-cv.pdf');
+                return runs.length ? runs : [{ text: textOf(element) }];
+            }
+
+            function addTextSection(content, section) {
+                content.push(sectionHeading(section));
+                Array.from(section.children).forEach(function (child) {
+                    if (child.tagName !== 'P') {
+                        return;
+                    }
+
+                    content.push({
+                        text: paragraphRuns(child),
+                        style: child.classList.contains('summary-meta') ? 'meta' : 'body',
+                        margin: child.classList.contains('summary-meta') ? [0, 4, 0, 0] : [0, 0, 0, 6]
+                    });
+                });
+            }
+
+            function jobBlock(job) {
+                var title = textOf(job.querySelector('h3'));
+                var meta = textOf(job.querySelector('.job-meta'));
+                var date = textOf(job.querySelector('.date'));
+                var bullets = Array.from(job.querySelectorAll('li')).map(function (item) {
+                    return { text: textOf(item), margin: [0, 0, 0, 2] };
+                });
+
+                return {
+                    stack: [
+                        {
+                            columns: [
+                                {
+                                    width: '*',
+                                    stack: [
+                                        { text: title, style: 'jobTitle' },
+                                        { text: meta, style: 'jobMeta' }
+                                    ]
+                                },
+                                {
+                                    width: 120,
+                                    text: date,
+                                    style: 'date',
+                                    alignment: 'right'
+                                }
+                            ],
+                            columnGap: 16
+                        },
+                        {
+                            ul: bullets,
+                            style: 'bulletList',
+                            margin: [0, 5, 0, 0]
+                        }
+                    ],
+                    margin: [0, 0, 0, 10]
+                };
+            }
+
+            function addJobSection(content, section) {
+                content.push(sectionHeading(section));
+                Array.from(section.querySelectorAll('.job')).forEach(function (job) {
+                    content.push(jobBlock(job));
+                });
+            }
+
+            function addSkillsSection(content, section) {
+                var rows = [];
+                var groups = Array.from(section.querySelectorAll('.skill-group'));
+
+                content.push(sectionHeading(section));
+
+                for (var i = 0; i < groups.length; i += 2) {
+                    rows.push([
+                        skillCell(groups[i]),
+                        groups[i + 1] ? skillCell(groups[i + 1]) : { text: '' }
+                    ]);
+                }
+
+                content.push({
+                    table: {
+                        widths: ['*', '*'],
+                        body: rows
+                    },
+                    layout: 'noBorders',
+                    margin: [0, 0, 0, 4]
+                });
+            }
+
+            function skillCell(group) {
+                return {
+                    stack: [
+                        { text: textOf(group.querySelector('h3')), style: 'skillTitle' },
+                        { text: textOf(group.querySelector('p')), style: 'meta' }
+                    ],
+                    margin: [0, 0, 12, 8]
+                };
+            }
+
+            function addSimpleSection(content, section) {
+                content.push(sectionHeading(section));
+                Array.from(section.children).forEach(function (child) {
+                    if (child.tagName === 'H2') {
+                        return;
+                    }
+
+                    if (child.tagName === 'UL') {
+                        content.push({
+                            ul: Array.from(child.querySelectorAll('li')).map(function (item) {
+                                return textOf(item);
+                            }),
+                            style: 'bulletList',
+                            margin: [0, 0, 0, 4]
+                        });
+                        return;
+                    }
+
+                    if (child.tagName === 'P') {
+                        content.push({
+                            text: paragraphRuns(child),
+                            style: 'body',
+                            margin: [0, 0, 0, 4]
+                        });
+                        return;
+                    }
+
+                    content.push({
+                        stack: Array.from(child.children).map(function (item) {
+                            return {
+                                text: textOf(item),
+                                style: item.tagName === 'H3' ? 'jobTitle' : 'body',
+                                margin: item.tagName === 'H3' ? [0, 0, 0, 2] : [0, 0, 0, 4]
+                            };
+                        })
+                    });
+                });
+            }
+
+            function buildPdfDefinition(sourceRoot) {
+                var center = sourceRoot.querySelector('.center');
+                var headerParagraphs = Array.from(center.querySelectorAll('p'));
+                var content = [
+                    { text: textOf(center.querySelector('h1')), style: 'name' },
+                    { text: textOf(headerParagraphs[0]), style: 'headline' },
+                    { text: textOf(headerParagraphs[1]), style: 'meta', margin: [0, 2, 0, 0] },
+                    {
+                        text: [
+                            { text: 'LinkedIn', link: 'https://www.linkedin.com/in/siarhei-thor/', color: '#2f6257', decoration: 'underline' },
+                            { text: ' | ', color: '#525b56' },
+                            { text: 'GitHub', link: 'https://github.com/SiarheiThor', color: '#2f6257', decoration: 'underline' }
+                        ],
+                        style: 'meta',
+                        margin: [0, 3, 0, 0]
+                    },
+                    { text: textOf(center.querySelector('.cv-last-updated')), style: 'softMeta', margin: [0, 4, 0, 10] },
+                    {
+                        canvas: [
+                            { type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1.2, lineColor: '#2f6257' }
+                        ],
+                        margin: [0, 0, 0, 4]
+                    }
+                ];
+
+                Array.from(sourceRoot.querySelectorAll('section')).forEach(function (section) {
+                    if (section.id === 'experience' || section.id === 'projects') {
+                        addJobSection(content, section);
+                        return;
+                    }
+
+                    if (section.id === 'skills') {
+                        addSkillsSection(content, section);
+                        return;
+                    }
+
+                    if (section.id === 'summary') {
+                        addTextSection(content, section);
+                        return;
+                    }
+
+                    addSimpleSection(content, section);
+                });
+
+                return {
+                    pageSize: 'A4',
+                    pageMargins: [40, 40, 40, 42],
+                    info: {
+                        title: 'Siarhei Thor CV',
+                        author: 'Siarhei Thor',
+                        subject: 'Curriculum Vitae'
+                    },
+                    defaultStyle: {
+                        font: 'Roboto',
+                        fontSize: 8.7,
+                        lineHeight: 1.27,
+                        color: '#1b2021'
+                    },
+                    content: content,
+                    styles: {
+                        name: { fontSize: 25, bold: true, margin: [0, 0, 0, 5] },
+                        headline: { fontSize: 10.5, bold: true, color: '#1b2021', margin: [0, 0, 0, 2] },
+                        body: { fontSize: 8.7, lineHeight: 1.3, color: '#1b2021' },
+                        meta: { fontSize: 8.2, color: '#525b56', lineHeight: 1.25 },
+                        softMeta: { fontSize: 7.8, color: '#727b75' },
+                        sectionHeading: {
+                            fontSize: 7.8,
+                            bold: true,
+                            color: '#2f6257',
+                            characterSpacing: 1.2
+                        },
+                        jobTitle: { fontSize: 9.2, bold: true, color: '#1b2021' },
+                        jobMeta: { fontSize: 8.1, color: '#525b56', margin: [0, 1, 0, 0] },
+                        date: { fontSize: 8.1, color: '#525b56', lineHeight: 1.2 },
+                        bulletList: { fontSize: 8.5, lineHeight: 1.25, color: '#1b2021' },
+                        skillTitle: { fontSize: 8.7, bold: true, color: '#1b2021', margin: [0, 0, 0, 2] }
+                    }
+                };
             }
 
             if (menuToggle && navigation) {
@@ -184,13 +295,11 @@
             }
 
             if (downloadButton && cvContent) {
-                downloadButton.addEventListener('click', async function () {
-                    var html2canvasReady = typeof window.html2canvas === 'function';
-                    var jsPdfReady = window.jspdf && typeof window.jspdf.jsPDF === 'function';
+                downloadButton.addEventListener('click', function () {
+                    var pdfMakeReady = window.pdfMake && typeof window.pdfMake.createPdf === 'function';
                     var originalLabel = downloadButton.textContent;
-                    var renderRoot = null;
 
-                    if (!html2canvasReady || !jsPdfReady) {
+                    if (!pdfMakeReady) {
                         window.alert('PDF download is temporarily unavailable. Please try again in a moment.');
                         return;
                     }
@@ -199,19 +308,11 @@
                     downloadButton.textContent = 'Generating PDF...';
 
                     try {
-                        var renderWidth = 820;
-                        renderRoot = createPdfRenderRoot(renderWidth);
-                        var items = buildPdfItems(cvContent, renderRoot);
-
-                        await renderPdfItems(items);
-                        exportPdfFromItems(items);
+                        window.pdfMake.createPdf(buildPdfDefinition(cvContent)).download('siarhei-thor-cv.pdf');
                     } catch (error) {
                         console.error('Failed to generate PDF', error);
                         window.alert('Could not generate the PDF automatically. Please try again.');
                     } finally {
-                        if (renderRoot) {
-                            renderRoot.remove();
-                        }
                         downloadButton.disabled = false;
                         downloadButton.textContent = originalLabel;
                     }
