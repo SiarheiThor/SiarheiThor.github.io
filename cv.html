@@ -93,7 +93,7 @@
             function jobBlock(job) {
                 var title = textOf(job.querySelector('h3'));
                 var meta = paragraphRuns(job.querySelector('.job-meta'));
-                var date = textOf(job.querySelector('.date'));
+                var date = Array.from(job.querySelectorAll('.date span')).map(textOf).join('\n');
                 var bullets = Array.from(job.querySelectorAll('li')).map(function (item) {
                     return { text: textOf(item), margin: [0, 0, 0, 2] };
                 });
@@ -110,7 +110,7 @@
                                     ]
                                 },
                                 {
-                                    width: 120,
+                                    width: 150,
                                     text: date,
                                     style: 'date',
                                     alignment: 'right'
@@ -357,13 +357,13 @@
             <p>AI/ML Engineer | Applied ML, LLM Systems &amp; AI Product Infrastructure</p>
             <p>Zurich, Switzerland | (+41) 78 217 35 65 | <a href="mailto:siarheithor@gmail.com">siarheithor@gmail.com</a></p>
             <p><a href="https://www.linkedin.com/in/siarhei-thor/" target="_blank">LinkedIn</a> | <a href="https://github.com/SiarheiThor" target="_blank">GitHub</a></p>
-            <p class="cv-last-updated">Last updated: June 15, 2026</p>
+            <p class="cv-last-updated">Last updated: October 26, 2026</p>
             <button class="download-cv-button" type="button">Download as PDF</button>
         </div>
 
         <section id="summary">
             <h2>Profile</h2>
-            <p>AI/ML Engineer experienced in owning the full lifecycle of production AI systems, from data preparation, feature engineering, model training, evaluation, and calibration through API development, deployment, monitoring, and automated retraining. Builds predictive ML services, agentic LLM applications, and backend infrastructure that turn complex real-world data into reliable internal tools and user-facing products. Brings hands-on engineering, product thinking, and experience leading complex multidisciplinary projects.</p>
+            <p>AI/ML Engineer experienced in owning the full lifecycle of production AI systems, from data preparation, feature engineering, model training, evaluation, and calibration through API development, deployment, monitoring, and automated retraining. Builds predictive ML services, agentic LLM applications, and backend infrastructure that turn complex real-world data into reliable internal tools and user-facing products. Brings hands-on engineering and product thinking, plus seven years as an architect (MSc, TU Delft) leading complex multidisciplinary projects with computational and generative design.</p>
             <p class="summary-meta"><strong>Focus:</strong> End-to-end ML systems, agentic AI products, data-intensive applications, and AI developer tooling</p>
         </section>
 
@@ -413,8 +413,9 @@
                     <p class="date"><span>Sep 2021 - Aug 2023</span></p>
                 </div>
                 <ul>
-                    <li>Advised architecture and real-estate clients on AI adoption, translating domain problems into practical workflows and MVP concepts.</li>
-                    <li>Built applied AI prototypes including a GPT-powered regulatory assistant for architects, a Stable Diffusion / ControlNet workflow for design exploration, and digital tools for sustainability-focused planning analysis.</li>
+                    <li>Built a GPT-powered regulatory assistant for architects, answering building-regulation questions with retrieval-augmented generation (RAG).</li>
+                    <li>Built a Stable Diffusion / ControlNet workflow for controlled architectural design exploration.</li>
+                    <li>Advised architecture and real-estate clients on AI adoption, translating domain problems into practical workflows, MVP concepts, and digital tools for sustainability-focused planning analysis.</li>
                 </ul>
             </div>
 
@@ -422,14 +423,16 @@
                 <div class="job-header">
                     <div class="job-title-group">
                         <h3>Senior Architect / Computational Design</h3>
-                        <p class="job-meta">Semren &amp; Månsson, Sweco, Cie</p>
+                        <p class="job-meta">Semrén &amp; Månsson, Sweco Architects, CIE</p>
                     </div>
                     <p class="date"><span>Jan 2015 - Oct 2021</span></p>
                 </div>
                 <ul>
-                    <li>Led and contributed to large-scale building projects across Sweden and the Netherlands, coordinating complex design-development work across international teams, consultants, and clients.</li>
-                    <li>Used programming and parametric design tools to improve delivery quality, automate repetitive workflows, and support complex design coordination.</li>
-                    <li>Managed multidisciplinary teams and developed training material for junior architects in computational design and digital methods.</li>
+                    <li>Project architect and creative lead on competition-winning, large-scale developments, including Forriver, Moscow (260,000 m² residential) and urban structure plans up to 100 ha (Semrén &amp; Månsson).</li>
+                    <li>Developed masterplans with generative and data-driven design methods, evaluating daylight, noise, views, and outdoor comfort across design options.</li>
+                    <li>Shared lead responsibility for parametric design on Kalverpassage, a large, high-profile project in central Amsterdam (CIE); architect and BIM manager on Baoshan Industrial Park, Shanghai (150,000 m², Sweco).</li>
+                    <li>Used programming and parametric design tools (Grasshopper, Dynamo, Rhino.Inside.Revit) to automate repetitive workflows, set up BIM models, and support complex design coordination.</li>
+                    <li>Managed multidisciplinary teams across international consultants and clients, and developed training material for junior architects in computational design.</li>
                 </ul>
             </div>
         </section>
@@ -461,37 +464,11 @@
                     <h3>Infrastructure, Observability &amp; Tooling</h3>
                     <p>Docker, Gunicorn/Uvicorn, OpenTelemetry, Langfuse, Sentry, pytest, Git, Linux, GCP</p>
                 </div>
-            </div>
-        </section>
 
-        <section id="projects">
-            <h2>Selected Projects</h2>
-            <div class="job">
-                <div class="job-header">
-                    <div class="job-title-group">
-                        <h3>Knowledge Hub</h3>
-                        <p class="job-meta">Personal Project | <a href="https://t.me/GermanWizardBot" target="_blank">German Wizard bot</a></p>
-                    </div>
-                    <p class="date"><span>Jul 2025 - Present</span></p>
+                <div class="skill-group">
+                    <h3>AEC &amp; Computational Design</h3>
+                    <p>Rhino + Grasshopper, Revit + Dynamo, Rhino.Inside.Revit, BIM coordination</p>
                 </div>
-                <ul>
-                    <li>Built a subject-agnostic, chat-native guided-learning engine with plugin-based content, mastery-driven quizzes, scheduled delivery, persistent learner state, and multi-provider LLM orchestration.</li>
-                    <li>Shipped German as the first subject across Telegram and web, including CEFR-based progression, cached AI-generated content, and real-time voice roleplay.</li>
-                </ul>
-            </div>
-
-            <div class="job">
-                <div class="job-header">
-                    <div class="job-title-group">
-                        <h3>Crypto Lens</h3>
-                        <p class="job-meta">Personal Project | <a href="https://t.me/cryptolens_radar" target="_blank">Public channel</a></p>
-                    </div>
-                    <p class="date"><span>2026 - Present</span></p>
-                </div>
-                <ul>
-                    <li>Built an always-on agentic market-intelligence system that aggregates price, technical indicators, news, sentiment, and macro data into scheduled crypto updates.</li>
-                    <li>Served a private research bot and facts-only public channel from one pipeline, enforcing the facts-versus-verdict boundary in code and suppressing low-information updates.</li>
-                </ul>
             </div>
         </section>
 
@@ -499,7 +476,7 @@
             <h2>Education &amp; Training</h2>
             <div>
                 <h3>MSc, Architectural Engineering — Delft University of Technology, The Netherlands</h3>
-                <p>September 2009 - June 2014</p>
+                <p>September 2009 - June 2014 | Honours Programme 2010 - 2014</p>
             </div>
             <div>
                 <h3>Data Science Program — EC Education, Stockholm / Online</h3>
