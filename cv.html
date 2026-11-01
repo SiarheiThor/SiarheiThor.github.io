@@ -354,17 +354,17 @@
         <div class="page-spacer"></div>
         <div class="center">
             <h1>Siarhei Thor</h1>
-            <p>AI/ML Engineer | Applied ML, LLM Systems &amp; AI Product Infrastructure</p>
+            <p>ML Engineer | Time-series, Data Products, LLM Agents | Architect (TU Delft)</p>
             <p>Zurich, Switzerland | (+41) 78 217 35 65 | <a href="mailto:siarheithor@gmail.com">siarheithor@gmail.com</a></p>
             <p><a href="https://www.linkedin.com/in/siarhei-thor/" target="_blank">LinkedIn</a> | <a href="https://github.com/SiarheiThor" target="_blank">GitHub</a></p>
-            <p class="cv-last-updated">Last updated: October 26, 2026</p>
+            <p class="cv-last-updated">Last updated: November 1, 2026</p>
             <button class="download-cv-button" type="button">Download as PDF</button>
         </div>
 
         <section id="summary">
             <h2>Profile</h2>
-            <p>AI/ML Engineer experienced in owning the full lifecycle of production AI systems, from data preparation, feature engineering, model training, evaluation, and calibration through API development, deployment, monitoring, and automated retraining. Builds predictive ML services, agentic LLM applications, and backend infrastructure that turn complex real-world data into reliable internal tools and user-facing products. Brings hands-on engineering and product thinking, plus seven years as an architect (MSc, TU Delft) leading complex multidisciplinary projects with computational and generative design.</p>
-            <p class="summary-meta"><strong>Focus:</strong> End-to-end ML systems, agentic AI products, data-intensive applications, and AI developer tooling</p>
+            <p>ML engineer who builds data products end to end: from scattered raw data to a dataset, models and a service that people use, with evaluation that holds up in production. Three years of production ML on time-series and LLM systems, two years running my own design and AI consulting practice, and seven years as an architect leading large multidisciplinary projects.</p>
+            <p class="summary-meta"><strong>Focus:</strong> Data products, end-to-end ML systems, time-series prediction, LLM agents and evaluation</p>
         </section>
 
         <section id="experience">
@@ -378,11 +378,12 @@
                     <p class="date"><span>May 2024 - Present</span></p>
                 </div>
                 <ul>
-                    <li>Developed end-to-end ML services for running and cycling analytics, spanning data preparation, model training, evaluation, calibration, deployment, monitoring, and automated retraining workflows.</li>
-                    <li>Designed feature engineering and data-quality workflows for time-series data from sports wearables, including preprocessing, bad data detection and handling, and support for incomplete activity data.</li>
-                    <li>Built an AI-assisted pipeline for collecting, enriching, and maintaining 5,000+ structured RaceDB records, replacing a part-time manual scraping and data-maintenance workflow.</li>
-                    <li>Designed AI-assisted training-planning and personalized feedback systems combining LLMs, sports analytics, structured knowledge, and custom training-load metrics.</li>
-                    <li>Developed AI coding-assistant workflows for repository maintenance, tool orchestration, sandboxed execution, reusable agent skills, and knowledge graph-supported project knowledge bases.</li>
+                    <li>Turned scattered athlete training files into a population-level dataset that drives athlete insights, performance estimates and training advice based on what worked for comparable groups of athletes.</li>
+                    <li>Own the prediction platform built on it: FastAPI services for running and cycling (performance prediction, FTP estimation, interval and training analysis); XGBoost ensembles; Docker, Sentry, automated retraining.</li>
+                    <li>Evaluation designed for production: validation on unseen athletes to prevent leakage, calibration of out-of-fold predictions, tests that compare local and production outputs to catch drift.</li>
+                    <li>Time-series features from raw wearable sensor streams; data-quality rules for labels and heart-rate data; inference that works on incomplete sensor data.</li>
+                    <li>Agentic pipeline that finds, extracts, validates and deduplicates race data (PydanticAI, Gemini, Crawl4AI), keeping the race database current and replacing a part-time manual workflow.</li>
+                    <li>Training-plan generator combining deterministic load logic with LLM adjustment, with validators for structure and physiological plausibility.</li>
                 </ul>
             </div>
 
@@ -398,24 +399,22 @@
                     </p>
                 </div>
                 <ul>
-                    <li>Built conversational analytics products on top of survey datasets, including chat-based insight workflows that translate structured data into natural-language answers.</li>
-                    <li>Developed a multi-agent survey intelligence prototype combining semantic retrieval, SQL-based analysis, statistical guardrails, and user-facing chat interfaces.</li>
-                    <li>Built preprocessing, vector-store, API, and interactive-analysis pipelines using FastAPI, DuckDB, pandas, SciPy, and FAISS.</li>
+                    <li>Conversational analytics over survey data: semantic retrieval (FAISS) to interpret questions, SQL (DuckDB) for exact numbers, statistical guardrails (chi-square, effect sizes, minimum sample sizes) so no finding is reported from too small a sample.</li>
                 </ul>
             </div>
 
             <div class="job">
                 <div class="job-header">
                     <div class="job-title-group">
-                        <h3>AI Strategy and Digitalization Consultant</h3>
+                        <h3>Founder · Own Practice and AI Consulting</h3>
                         <p class="job-meta">STHLM22, Stockholm</p>
                     </div>
                     <p class="date"><span>Sep 2021 - Aug 2023</span></p>
                 </div>
                 <ul>
-                    <li>Built a GPT-powered regulatory assistant for architects, answering building-regulation questions with retrieval-augmented generation (RAG).</li>
-                    <li>Built a Stable Diffusion / ControlNet workflow for controlled architectural design exploration.</li>
-                    <li>Advised architecture and real-estate clients on AI adoption, translating domain problems into practical workflows, MVP concepts, and digital tools for sustainability-focused planning analysis.</li>
+                    <li>Early-stage design with ideation through computational design. Won the Moscow &ldquo;Renovation&rdquo; urban planning competition: densification of a 1980s district across 3 large plots, about 2 million m² of building area.</li>
+                    <li>RAG assistant answering building-regulation questions for architects; Stable Diffusion / ControlNet workflow for controlled design exploration.</li>
+                    <li>AI adoption advice for architecture and real-estate clients: workflows, MVP concepts, planning-analysis tools.</li>
                 </ul>
             </div>
 
@@ -428,13 +427,20 @@
                     <p class="date"><span>Jan 2015 - Oct 2021</span></p>
                 </div>
                 <ul>
-                    <li>Project architect and creative lead on competition-winning, large-scale developments, including Forriver, Moscow (260,000 m² residential) and urban structure plans up to 100 ha (Semrén &amp; Månsson).</li>
-                    <li>Developed masterplans with generative and data-driven design methods, evaluating daylight, noise, views, and outdoor comfort across design options.</li>
-                    <li>Shared lead responsibility for parametric design on Kalverpassage, a large, high-profile project in central Amsterdam (CIE); architect and BIM manager on Baoshan Industrial Park, Shanghai (150,000 m², Sweco).</li>
-                    <li>Used programming and parametric design tools (Grasshopper, Dynamo, Rhino.Inside.Revit) to automate repetitive workflows, set up BIM models, and support complex design coordination.</li>
-                    <li>Managed multidisciplinary teams across international consultants and clients, and developed training material for junior architects in computational design.</li>
+                    <li>Project architect and creative lead on competition-winning Forriver, Moscow (260,000 m²); masterplans up to 100 ha evaluated with generative, data-driven methods (daylight, noise, views, outdoor comfort).</li>
+                    <li>Architect and BIM manager, Baoshan Industrial Park, Shanghai (150,000 m²); shared parametric-design lead on Kalverpassage, Amsterdam.</li>
+                    <li>Led international multidisciplinary teams; automated workflows with Grasshopper, Dynamo and Rhino.Inside.Revit; trained juniors in computational design.</li>
                 </ul>
             </div>
+        </section>
+
+        <section id="research">
+            <h2>Research Interests: AI for Design</h2>
+            <ul>
+                <li>Controllability: steering generative systems toward what the designer intends.</li>
+                <li>Design novelty: whether AI can produce new solutions or only recombine what it has seen.</li>
+                <li>Self-improvement: systems that evaluate their own output and improve from it.</li>
+            </ul>
         </section>
 
         <section id="skills">
@@ -446,23 +452,23 @@
                 </div>
 
                 <div class="skill-group">
-                    <h3>ML, AI &amp; Modeling Frameworks</h3>
-                    <p>scikit-learn, XGBoost, TensorFlow, PydanticAI, Pydantic, OpenAI-compatible APIs</p>
+                    <h3>Machine Learning</h3>
+                    <p>scikit-learn, XGBoost, TensorFlow, Optuna; evaluation design, calibration, time-series features</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Data &amp; Analytics Libraries</h3>
-                    <p>pandas, NumPy, SciPy, DuckDB, FAISS, PyArrow, Optuna, Plotly</p>
+                    <h3>LLM Systems</h3>
+                    <p>PydanticAI, agents, RAG (FAISS, pgvector), structured extraction, MCP, Langfuse</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Application &amp; Data Systems</h3>
-                    <p>FastAPI, SQLAlchemy, PostgreSQL, MySQL, Redis, WebSockets, Alembic</p>
+                    <h3>Data &amp; Backend</h3>
+                    <p>pandas, NumPy, SciPy, DuckDB, PostgreSQL, FastAPI, SQLAlchemy, Redis</p>
                 </div>
 
                 <div class="skill-group">
-                    <h3>Infrastructure, Observability &amp; Tooling</h3>
-                    <p>Docker, Gunicorn/Uvicorn, OpenTelemetry, Langfuse, Sentry, pytest, Git, Linux, GCP</p>
+                    <h3>Infrastructure &amp; Tooling</h3>
+                    <p>Docker, GCP, Sentry, OpenTelemetry, pytest, Git, Linux</p>
                 </div>
 
                 <div class="skill-group">
@@ -486,7 +492,7 @@
 
         <section id="additional">
             <h2>Additional</h2>
-            <p><strong>Languages:</strong> Russian: native; English, Dutch, Swedish, and Belarusian: fluent.</p>
+            <p><strong>Languages:</strong> Russian: native; English, Dutch, Swedish, and Belarusian: fluent; German: A2.</p>
             <p>Interests: Orienteering, trail running, cycling, photography.</p>
         </section>
     </main>
